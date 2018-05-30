@@ -81,7 +81,7 @@ module Depfu
         if obs_packages.any? { |package| package.name.end_with?(gem.name) && package.version == gem.version }
           msg << "- Package #{gem.name} is already up to date in O:S:U (#{gem.version}).\n"
         elsif devel_ruby_packages.any? { |package| package.name.end_with?(gem.name) && package.version == gem.version }
-          msg << "- Package #{gem.name} is already up to date in d:l:r:e (#{gem.version}), update link reference with 'osc setlinkrev OBS:Server:Unstable rubygem-#{gem.name}'.\n"
+          msg << "- Package #{gem.name} is already up to date in d:l:r:e (#{gem.version}), update link reference with `osc setlinkrev OBS:Server:Unstable rubygem-#{gem.name}`.\n"
         elsif factory_auto_packages.any? { |package| package.name.end_with?(gem.name) && package.version == gem.version }
           submit_request = factory_auto_packages.find { |package| package.name.end_with?(gem.name) && package.version == gem.version }.submit_requests.first
           msg << "- There is already a submit request for package #{gem.name} (#{gem.version}). "
