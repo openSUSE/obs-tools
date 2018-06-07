@@ -13,10 +13,8 @@ module Depfu
       body.each_line do |line|
         next unless table_line?(line)
         splitted = line.split('|')
-        if ['updated', 'created'].include?(splitted[1].strip)
+        if ['updated', 'created', 'added'].include?(splitted[1].strip)
           result << Gem.new(splitted[2].strip, splitted[4].strip)
-        else
-          result << Gem.new(splitted[1].strip, splitted[4].strip)
         end
       end
       result
