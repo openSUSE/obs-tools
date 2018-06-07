@@ -90,8 +90,8 @@ module Depfu
             msg << "Most likely something with the factory-auto bot went wrong, try to branch the project to your home and submit it manually.\n"
           end
         else
-          msg << "- There is no submit request for #{gem.name} (#{gem.version}).\n"
-          msg << "- If you recently accepted a submit request, the repository is probably not yet published!\n"
+          msg << "- There is no submit request for #{gem.name} (#{gem.version}). "
+          msg << "If you recently accepted a submit request, the repository is probably not yet published!\n"
         end
       end
       msg
