@@ -82,11 +82,16 @@ module Depfu
           msg << "- Package #{gem.name} is already up to date in d:l:r:e (#{gem.version}), update link reference with `osc setlinkrev OBS:Server:Unstable rubygem-#{gem.name}`.\n"
         elsif factory_auto_packages.any? { |package| package.name.end_with?(gem.name) && package.version == gem.version }
           submit_request = factory_auto_packages.find { |package| package.name.end_with?(gem.name) && package.version == gem.version }.submit_requests.first
-          msg << "- There is already a submit request for package #{gem.name} (#{gem.version}). "
-          msg << "Please review and accept [#{submit_request.number}](https://build.opensuse.org/request/show/#{submit_request.number}).\n"
+          if submit_request
+            msg << "- There is already a submit request for package #{gem.name} (#{gem.version}). "
+            msg << "Please review and accept [#{submit_request.number}](https://build.opensuse.org/request/show/#{submit_request.number}).\n"
+          else
+            msg << "- There is already a package in https://build.opensuse.org/project/show/home:factory-auto:branches:devel:languages:ruby:extensions project but no submit request. "
+            msg << "Most likely something with the factory-auto bot went wrong, try to branch the project to your home and submit it manually.\n"
+          end
         else
-          msg << "- There is no submit request for #{gem.name} (#{gem.version}).\n"
-          msg << "- If you recently accepted a submit request, the repository is probably not yet published!\n"
+          msg << "- There is no submit request for #{gem.name} (#{gem.version}). "
+          msg << "If you recently accepted a submit request, the repository is probably not yet published!\n"
         end
       end
       msg
