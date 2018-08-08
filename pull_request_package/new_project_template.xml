@@ -1,0 +1,29 @@
+<project name="name">
+  <title></title>
+  <description/>
+  <build>
+    <enable/>
+  </build>
+  <publish>
+    <disable/>
+  </publish>
+  <debuginfo>
+    <enable/>
+  </debuginfo>
+  <repository name="openSUSE_42.3">
+    <path project="OBS:Server:Unstable" repository="openSUSE_42.3"/>
+    <arch>x86_64</arch>
+  </repository>
+  <repository name="openSUSE_15.0">
+    <path project="OBS:Server:Unstable" repository="openSUSE_15.0"/>
+    <arch>x86_64</arch>
+  </repository>
+  <repository name="SLE_15">
+    <path project="OBS:Server:Unstable" repository="SLE_15"/>
+    <arch>x86_64</arch>
+  </repository>
+  <repository name="SLE_12_SP3">
+    <path project="OBS:Server:Unstable" repository="SLE_12_SP3"/>
+    <arch>x86_64</arch>
+  </repository>
+</project>
