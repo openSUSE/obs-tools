@@ -1,7 +1,4 @@
 require 'octokit'
-require 'nokogiri'
-require 'tempfile'
-require 'fileutils'
 require 'logger'
 require 'yaml'
 require_relative 'lib/obs_pull_request_package'
