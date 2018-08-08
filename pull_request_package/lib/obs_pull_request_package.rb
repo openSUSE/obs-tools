@@ -21,7 +21,15 @@ class ObsPullRequestPackage
     "https://build.opensuse.org/package/show/#{obs_project_name}/obs-server"
   end
   
+  def last_commited_sha
+    history = `osc api "/source/#{obs_project_name}/obs-server/_history"`
+    node = Nokogiri::XML(history).root
+    return '' unless node
+    node.xpath('.//revision/comment').last.content
+  end
+
   def create
+    return if last_commited_sha == commit_sha
     create_project
     create_package
     copy_files
