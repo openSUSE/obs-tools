@@ -6,7 +6,6 @@ class GitHubStatusReporter
   attr_accessor :client, :logger, :package
   
   def report
-    summary = self.summary
     state = :success
     if summary[:failure] > 0
       state = :failure
@@ -47,13 +46,14 @@ class GitHubStatusReporter
   end
 
   def summary
-    _summary = { failure: 0, success: 0, pending: 0 }
+    return @summary if @summary
+    @summary = { failure: 0, success: 0, pending: 0 }
     result = `osc api /build/#{package.obs_project_name}/_result`
     node = Nokogiri::XML(result).root
     node.xpath('.//status').each do |status|
-      _summary[judge_code(status['code'])] += 1
+      @summary[judge_code(status['code'])] += 1
     end
-    _summary
+    @summary
   end
 
 end
