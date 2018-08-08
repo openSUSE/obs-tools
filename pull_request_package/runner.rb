@@ -12,6 +12,7 @@ def line_seperator(pull_request)
   '=' * 15 + " #{pull_request.title} (#{pull_request.number}) " + '=' * 15
 end
 
+new_packages = []
 client.pull_requests('openSUSE/open-build-service').each do |pull_request|
   next if pull_request.updated_at < (Date.today - 7).to_time || pull_request.base.ref != 'master'
 
@@ -21,4 +22,9 @@ client.pull_requests('openSUSE/open-build-service').each do |pull_request|
   package.create
   
   GitHubStatusReporter.new(package: package, client: client, logger: logger).report
+  new_packages << package
+end
+
+(ObsPullRequestPackage.all(logger) - new_packages).each do |package|
+  package.delete
 end
