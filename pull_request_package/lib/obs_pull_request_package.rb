@@ -17,6 +17,10 @@ class ObsPullRequestPackage
     "OBS:Server:Unstable:TestGithub:PR-#{pull_request_number}"
   end
   
+  def url
+    "https://build.opensuse.org/package/show/#{obs_project_name}/obs-server"
+  end
+  
   def create
     create_project
     create_package
