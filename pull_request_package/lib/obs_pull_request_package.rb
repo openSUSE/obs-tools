@@ -54,7 +54,6 @@ class ObsPullRequestPackage
   end
   
   def create_package
-    logger.debug("Creating package #{obs_project_name}")
     capture2e_with_logs("osc meta pkg #{obs_project_name} obs-server --file new_package_template.xml")
   end
   
