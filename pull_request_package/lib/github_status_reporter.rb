@@ -24,6 +24,8 @@ class GitHubStatusReporter
     client.create_status('openSUSE/open-build-service', 'f73658fa927b90a0a3d28b79866215210b856390', state, options.merge(description: descr))
   end
   
+  private
+  
   def options
     options = { 
       context: "OBS Package build result #{package.pull_request.number}",
