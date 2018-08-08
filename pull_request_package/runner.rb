@@ -20,7 +20,8 @@ client.pull_requests('openSUSE/open-build-service').each do |pull_request|
 
   logger.info('')
   logger.info(line_seperator(pull_request))
-  package = ObsPullRequestPackage.new(pull_request: pull_request, logger: logger).create
+  package = ObsPullRequestPackage.new(pull_request: pull_request, logger: logger)
+  package.create
   
-  GitHubStatusReporter(package: package, client: client, logger: logger).report
+  GitHubStatusReporter.new(package: package, client: client, logger: logger).report
 end
