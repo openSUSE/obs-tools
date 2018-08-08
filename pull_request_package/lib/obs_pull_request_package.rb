@@ -8,6 +8,34 @@ class ObsPullRequestPackage
   include ActiveModel::Model
   attr_accessor :pull_request, :logger, :template_directory
   
+  def self.all
+    PullRequest = Struct.new(:number)
+    result `osc api search/project?match=starts-with(@name,'OBS:Server:Unstable:TestGithub:PR')`
+    xml = Nokogiri::XML(result)
+    xml.xpath('//project').map do |project|
+      pull_request_numer = project.attribute('name').to_s.split('-').last
+      PullRequest.new(number: pull_request_number)
+    end
+  end
+
+  def self.delete(packages)
+    packages.each do |package|
+      `osc api -X DELETE source/#{package.obs_project_names}`
+    end
+  end
+
+  def ==(other)
+    pull_request.number == other.pull_request.number
+  end
+
+  def eql?(other)
+    pull_request.number.eql(other.pull_request.number)
+  end
+
+  def hash
+    pull_request.number.hash
+  end
+
   def pull_request_number
     pull_request.number
   end
