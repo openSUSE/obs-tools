@@ -1,4 +1,7 @@
 require 'active_model'
+require 'nokogiri'
+require 'tempfile'
+require 'fileutils'
 require 'open3'
 
 class ObsPullRequestPackage
