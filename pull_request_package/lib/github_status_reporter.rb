@@ -6,7 +6,7 @@ class GitHubStatusReporter
   attr_accessor :client, :logger, :package
   
   def report
-    client.create_status('openSUSE/open-build-service', 'f73658fa927b90a0a3d28b79866215210b856390', state, options)
+    client.create_status('openSUSE/open-build-service', package.commit_sha, state, options)
   end
 
   private
@@ -35,7 +35,7 @@ class GitHubStatusReporter
 
   def options
     options = { 
-      context: "OBS Package build result #{package.pull_request.number}",
+      context: "OBS Package Build",
       target_url: package.url,
       description: description
     }
