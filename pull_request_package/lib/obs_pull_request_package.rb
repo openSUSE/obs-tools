@@ -13,8 +13,8 @@ class ObsPullRequestPackage
     result = `osc api "search/project?match=starts-with(@name,'OBS:Server:Unstable:TestGithub:PR')"`
     xml = Nokogiri::XML(result)
     xml.xpath('//project').map do |project|
-      pull_request_number = project.attribute('name').to_s.split('-').last
-      ObsPullRequestPackage.new(pull_request: PullRequest.new(number: pull_request_number), logger: logger)
+      pull_request_number = project.attribute('name').to_s.split('-').last.to_i
+      ObsPullRequestPackage.new(pull_request: PullRequest.new(pull_request_number), logger: logger)
     end
   end
 

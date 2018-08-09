@@ -25,6 +25,7 @@ client.pull_requests('openSUSE/open-build-service').each do |pull_request|
   new_packages << package
 end
 
-(ObsPullRequestPackage.all(logger) - new_packages).each do |package|
-  package.delete
+ObsPullRequestPackage.all(logger).each do |obs_package|
+  next if new_packages.any? { |pr_package| pr_package.pull_request.number == obs_package.pull_request.number }
+  obs_package.delete
 end
