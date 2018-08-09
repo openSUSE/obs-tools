@@ -42,6 +42,11 @@ class ObsPullRequestPackage
     pull_request.head.sha
   end
   
+  def merge_sha
+    # github test merge commit
+    pull_request.merge_commit_sha
+  end
+ 
   def obs_project_name
     "OBS:Server:Unstable:TestGithub:PR-#{pull_request_number}"
   end
@@ -130,7 +135,7 @@ class ObsPullRequestPackage
     content = File.read(path)
     xml = Nokogiri::XML(content)
     node = xml.root.at_xpath(".//param[@name='revision']")
-    node.content = commit_sha
+    node.content = merge_sha
     xml.to_s
   end
 end
