@@ -56,14 +56,16 @@ class ObsPullRequestPackage
   end
   
   def last_commited_sha
-    history = `osc api "/source/#{obs_project_name}/obs-server/_history"`
-    node = Nokogiri::XML(history).root
+    result = capture2e_with_logs("osc api /source/#{obs_project_name}/obs-server/_history")
+    node = Nokogiri::XML(result).root
     return '' unless node
     node.xpath('.//revision/comment').last.content
   end
 
   def create
-    return if last_commited_sha == commit_sha
+    if last_commited_sha == commit_sha
+      logger.info('Pull request did not change, skipping ...')
+    end
     create_project
     create_package
     copy_files
