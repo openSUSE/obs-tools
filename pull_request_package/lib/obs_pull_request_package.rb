@@ -56,8 +56,8 @@ class ObsPullRequestPackage
   end
   
   def last_commited_sha
-    history = `osc api "/source/#{obs_project_name}/obs-server/_history"`
-    node = Nokogiri::XML(history).root
+    result = capture2e_with_logs("osc api /source/#{obs_project_name}/obs-server/_history")
+    node = Nokogiri::XML(result).root
     return '' unless node
     node.xpath('.//revision/comment').last.content
   end
