@@ -65,6 +65,7 @@ class ObsPullRequestPackage
   def create
     if last_commited_sha == commit_sha
       logger.info('Pull request did not change, skipping ...')
+      return
     end
     create_project
     create_package
