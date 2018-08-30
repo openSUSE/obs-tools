@@ -12,15 +12,13 @@ class GitHubStatusReporter
   private
 
   def description
-    count = summary[:success] + summary[:failure] + summary[:pending]
-    case state
-    when :failure
-       "#{summary[:failure]}/#{count} failed"
-    when :success
-       "#{count} succeeded"
-    else
-       "#{summary[:pending]}/#{count} building"
-    end
+    count_all = summary[:success] + summary[:failure] + summary[:pending]
+    count_finished = count_all - summary[:pending]
+
+    result = "#{count_finished}/#{count_all} processed"
+    result << " | #{summary[:failure]} failures" if summary[:failure] > 0
+
+    result
   end
 
   def state
