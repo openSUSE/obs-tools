@@ -6,10 +6,27 @@ class GitHubStatusReporter
   attr_accessor :client, :logger, :package
   
   def report
-    client.create_status('openSUSE/open-build-service', package.commit_sha, state, options)
+    if update?
+      logger.info("Update status to state #{state}.")
+      client.create_status('openSUSE/open-build-service', package.commit_sha, state, options)
+    else
+      logger.info('State did not change, continue...')
+    end
+  rescue Octokit::Error => e
+    logger.error("Status not updated: #{e}.")
   end
 
   private
+
+  def update?
+    statuses = client.statuses('openSUSE/open-build-service', package.commit_sha)
+    build_status = statuses.select { |state| state.context == context }.first
+    build_status.nil? || state.to_s != build_status.state || description != build_status.description
+  end
+
+  def context
+    "OBS Package Build"
+  end
 
   def description
     count = summary[:success] + summary[:failure] + summary[:pending]
@@ -34,8 +51,8 @@ class GitHubStatusReporter
   end
 
   def options
-    options = { 
-      context: "OBS Package Build",
+    {
+      context: context,
       target_url: package.url,
       description: description
     }
