@@ -14,7 +14,7 @@ end
 
 new_packages = []
 client.pull_requests('openSUSE/open-build-service').each do |pull_request|
-  next if pull_request.updated_at < (Date.today - 7).to_time || pull_request.base.ref != 'master'
+  next if pull_request.base.ref != 'master'
 
   logger.info('')
   logger.info(line_seperator(pull_request))
