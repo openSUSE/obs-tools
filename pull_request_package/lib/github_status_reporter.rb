@@ -58,8 +58,10 @@ class GitHubStatusReporter
   
   def judge_code(code)
     case code
-    when 'succeeded', 'excluded', 'disabled'
+    when 'succeeded'
       :success
+    when 'excluded', 'disabled'
+      :exclusion
     when 'broken', 'failed', 'unresolvable'
       :failure
     when 'building', 'dispatching', 'scheduled', 'finished', 'blocked'
@@ -72,7 +74,7 @@ class GitHubStatusReporter
 
   def summary
     return @summary if @summary
-    @summary = { failure: 0, success: 0, pending: 0 }
+    @summary = { failure: 0, success: 0, pending: 0, exclusion: 0 }
     result = `osc api /build/#{package.obs_project_name}/_result`
     node = Nokogiri::XML(result).root
     node.xpath('.//status').each do |status|
