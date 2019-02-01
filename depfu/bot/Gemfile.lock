@@ -15,11 +15,11 @@ GEM
       multipart-post (>= 1.2, < 3)
     i18n (1.0.0)
       concurrent-ruby (~> 1.0)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.4.0)
     minitest (5.11.3)
     multipart-post (2.0.0)
-    nokogiri (1.8.2)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.10.1)
+      mini_portile2 (~> 2.4.0)
     octokit (4.8.0)
       sawyer (~> 0.8.0, >= 0.5.3)
     public_suffix (3.0.2)
@@ -39,4 +39,4 @@ DEPENDENCIES
   octokit
 
 BUNDLED WITH
-   1.16.1
+   1.16.6
