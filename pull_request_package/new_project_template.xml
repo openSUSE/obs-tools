@@ -14,8 +14,8 @@
     <path project="OBS:Server:Unstable" repository="SLE_15"/>
     <arch>x86_64</arch>
   </repository>
-  <repository name="SLE_12_SP3">
-    <path project="OBS:Server:Unstable" repository="SLE_12_SP3"/>
+  <repository name="SLE_12_SP4">
+    <path project="OBS:Server:Unstable" repository="SLE_12_SP4"/>
     <arch>x86_64</arch>
   </repository>
 </project>
