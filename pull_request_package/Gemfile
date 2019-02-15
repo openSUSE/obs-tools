@@ -7,3 +7,5 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 gem 'octokit'
 gem 'nokogiri'
 gem 'activemodel'
+
+gem 'pull_request_builder', github: 'vpereira/pull_request_builder'

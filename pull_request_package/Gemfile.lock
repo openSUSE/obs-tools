@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/vpereira/pull_request_builder
+  revision: 62ce8a0d70b225ae837d36eee26815460ecd63c2
+  specs:
+    pull_request_builder (0.1.0)
+      activemodel (~> 5.2)
+      nokogiri (~> 1.10)
+      octokit (~> 4.9)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -41,6 +50,7 @@ DEPENDENCIES
   activemodel
   nokogiri
   octokit
+  pull_request_builder!
 
 BUNDLED WITH
    1.16.6
