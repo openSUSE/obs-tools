@@ -7,5 +7,7 @@ WorkingDirectory=/home/package-bot/obs-tools/pull_request_package
 Environment="PATH='/home/package-bot/.gem/bin:'$PATH
 Environment="GEM_HOME=/home/package-bot/.gem"
 Environment="GEM_PATH=/home/package-bot/.gem"
-ExecStart=/home/package-bot/.gem/bin/bundle.ruby2.4 exec /usr/bin/ruby.ruby2.4 runner.rb 
+ExecStart=docker run -v $PWD:/home/puller/pull_request_package --rm -ti
+vpereira/pull_request_package runner.rb
 
+docker run --network="open-build-service_default"  -v $PWD:/home/puller/pull_request_package --rm -ti vpereira/pull_request_package ruby runner.rb -f config.yml

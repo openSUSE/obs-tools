@@ -1,13 +1,16 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 require 'rubygems'
-require 'bundler/setup'
-require 'pull_request_builder'
+require "bundler"
+Bundler.require(:default)
 
-if $PROGRAM_NAME == __FILE__
-  octokit_config = YAML.load_file('config/config.yml')
-  fetcher = PullRequestBuilder::GithubPullRequestFetcher.new(octokit_config)
-  fetcher.pull('openSUSE/open-build-service', 'master')
-  fetcher.delete
+opts = Slop.parse do |o|
+  o.string '-f', '--filename', 'configuration file to be used', required: true
 end
 
+puts opts
+
+pull_request_builder_config = YAML.load_file(opts[:filename])
+fetcher = PullRequestBuilder::GithubPullRequestFetcher.new(pull_request_builder_config)
+fetcher.pull
+fetcher.delete
