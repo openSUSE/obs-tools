@@ -15,3 +15,5 @@ RUN chown -R puller:users /home/puller/
 USER puller
 
 WORKDIR /home/puller/pull_request_package
+
+ENTRYPOINT ["./entrypoint.sh"]

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/vpereira/pull_request_builder
-  revision: b1263229688bad7d0f6d98c03eef4b1ef218bc52
+  revision: b2b1c99e384f74e705238dfff84b9e15a58337c0
   specs:
     pull_request_builder (0.1.0)
       activemodel (~> 5.2)
