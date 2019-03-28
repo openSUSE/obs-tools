@@ -1,6 +1,6 @@
 #!/bin/bash
 
 while true; do
-  ./runner.rb -f config/config.yml
+  exec "$@"
   sleep $RUN_EVERY
 done
