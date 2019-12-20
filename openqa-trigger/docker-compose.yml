@@ -1,0 +1,12 @@
+version: "2.1"
+services:
+  openqa-trigger:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    command: ./schedule-obs.sh
+    restart: always
+    environment:
+      - RUN_EVERY=600
+    volumes:
+      - .:/home/frontend/openqa-trigger
