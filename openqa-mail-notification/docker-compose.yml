@@ -1,0 +1,12 @@
+version: "2.1"
+services:
+  openqa-mail-notification:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    command: ./mail_notification.rb
+    restart: always
+    environment:
+      - RUN_EVERY=600
+    volumes:
+      - .:/home/frontend/openqa-mail-notification
