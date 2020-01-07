@@ -62,7 +62,7 @@ config = YAML::load_file('config.yml')
 
 config['versions'].each do |version|
   build = get_build_information(config, version)
-  store = YAML::Store.new("builds-#{version}.yml")
+  store = YAML::Store.new("last_builds/build-#{version}.yml")
   last_build = store.transaction { store[:name] }
   result = last_build <=> build['name']
 
