@@ -7,9 +7,9 @@ require 'json'
 require 'mail'
 require 'yaml/store'
 
-def get_build_information(config, version)
+def get_build_information(config, version, group)
   begin
-    uri = URI.parse("#{config['open_qa']}api/v1/jobs?distri=#{config['distribution']}&version=#{version}")
+    uri = URI.parse("#{config['open_qa']}api/v1/jobs?distri=#{config['distribution']}&version=#{version}&groupid=#{group}")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -26,9 +26,9 @@ def modules_to_sentence(modules)
   modules.map { |m| "#{m['name']} #{m['result']}" }
 end
 
-def build_message(config, build, successful_modules, failed_modules, version)
+def build_message(config, build, successful_modules, failed_modules, version, group)
   <<~MESSAGE_END
-    See #{config['open_qa']}tests/overview?distri=#{config['distribution']}&build=#{build}
+    See #{config['open_qa']}tests/overview?distri=#{config['distribution']}&version=#{version}&build=#{build}&groupid=#{group}
 
     #{failed_modules.length + successful_modules.length} modules, #{failed_modules.length} failed, #{successful_modules.length} successful
 
@@ -60,8 +60,8 @@ end
 
 config = YAML::load_file('config.yml')
 
-config['versions'].each do |version|
-  build = get_build_information(config, version)
+config['versions'].each_pair do |version, group|
+  build = get_build_information(config, version, group)
   store = YAML::Store.new("last_builds/build-#{version}.yml")
   last_build = store.transaction { store[:name] }
   result = last_build <=> build['name']
@@ -74,7 +74,7 @@ config['versions'].each do |version|
     failed_modules = modules_to_sentence(failed_modules)
 
     subject = "Build #{build['result']} in openQA: #{build['name']}"
-    message = build_message(config, build['settings']['BUILD'], successful_modules, failed_modules, version)
+    message = build_message(config, build['settings']['BUILD'], successful_modules, failed_modules, version, group)
     to = config['to_success']
     to = config['to_failed'] unless failed_modules.empty?
     send_notification(config['smtp_server'], config['from'], to, subject, message)
