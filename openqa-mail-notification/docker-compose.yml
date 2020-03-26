@@ -4,7 +4,6 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
-    command: ./mail_notification.rb
     restart: always
     environment:
       - RUN_EVERY=600
