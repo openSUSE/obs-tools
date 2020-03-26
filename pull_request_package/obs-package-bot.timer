@@ -1,4 +1,4 @@
-[unit]
+[Unit]
 Description=obs-package-bot timer
 
 [Timer]
