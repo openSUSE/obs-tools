@@ -4,8 +4,7 @@ Description=obs-package bot
 [Service]
 User=package-bot
 WorkingDirectory=/home/package-bot/obs-tools/pull_request_package
-Environment="PATH='/home/package-bot/.gem/bin:'$PATH
+Environment="PATH=/home/package-bot/.gem/bin:/usr/bin:$PATH"
 Environment="GEM_HOME=/home/package-bot/.gem"
 Environment="GEM_PATH=/home/package-bot/.gem"
-ExecStart=/home/package-bot/.gem/bin/bundle.ruby2.4 exec /usr/bin/ruby.ruby2.4 runner.rb 
-
+ExecStart=/home/package-bot/.gem/bin/bundle.ruby2.4 exec /usr/bin/ruby.ruby2.4 runner.rb
