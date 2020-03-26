@@ -9,6 +9,6 @@ WORKDIR /home/frontend/openqa-mail-notification
 
 USER frontend
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
 
-CMD ["/usr/local/bin/mail_notification.rb"]
+CMD ["./mail_notification.rb"]
