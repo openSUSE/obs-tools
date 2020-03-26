@@ -61,5 +61,9 @@ A list of OBS Repositories you want to check the package for. Separated by blank
 
 ## Usage
 1. Clone the repository
-1. bundle install
-1. bundle exec status-check.rb
+2. Build the docker container:
+``` make build```
+3. Start the service:
+```
+make run
+```
