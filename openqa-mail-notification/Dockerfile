@@ -7,6 +7,9 @@ RUN chown --recursive frontend:users /home/frontend/
 
 WORKDIR /home/frontend/openqa-mail-notification
 
+COPY entrypoint.sh mail_notification.rb /usr/local/bin/
+RUN chmod a+x /usr/local/bin/entrypoint.sh /usr/local/bin/mail_notification.rb
+
 USER frontend
 
 ENTRYPOINT ["./entrypoint.sh"]
