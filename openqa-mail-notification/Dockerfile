@@ -12,6 +12,6 @@ RUN chmod a+x /usr/local/bin/entrypoint.sh /usr/local/bin/mail_notification.rb
 
 USER frontend
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
-CMD ["./mail_notification.rb"]
+CMD ["/usr/local/bin/mail_notification.rb"]
