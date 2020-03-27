@@ -1,9 +1,0 @@
-[unit]
-Description=obs-package-bot timer
-
-[Timer]
-OnBootSec=10m
-OnUnitInactiveSec=5m
-
-[Install]
-WantedBy=basic.target
