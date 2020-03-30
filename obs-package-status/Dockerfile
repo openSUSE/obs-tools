@@ -9,8 +9,11 @@ WORKDIR /home/frontend/obs-package-status
 
 RUN bundler.ruby2.5 install
 
+COPY entrypoint.sh status-check.rb /usr/local/bin/
+RUN chmod a+x /usr/local/bin/entrypoint.sh /usr/local/bin/status-check.rb
+
 USER frontend
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
-CMD ["./status-check.rb"]
+CMD ["/usr/local/bin/status-check.rb"]
