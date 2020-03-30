@@ -9,8 +9,10 @@ RUN chown -R frontend:users /home/frontend/
 
 WORKDIR /home/frontend/openqa-trigger
 
+COPY entrypoint.sh schedule-obs.sh /usr/local/bin/
+
 USER frontend
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
-CMD ["./schedule-obs.sh"]
+CMD ["/usr/local/bin/schedule-obs.sh"]
