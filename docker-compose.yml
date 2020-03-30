@@ -9,3 +9,12 @@ services:
       - RUN_EVERY=600
     volumes:
       - .:/home/frontend/openqa-trigger
+  openqa-mail-notification:
+    build:
+      dockerfile: Dockerfile
+      context: openqa-mail-notification
+    restart: always
+    environment:
+      - RUN_EVERY=600
+    volumes:
+      - .:/home/frontend/openqa-mail-notification
