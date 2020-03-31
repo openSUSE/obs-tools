@@ -26,4 +26,4 @@ services:
     environment:
       - RUN_EVERY=600
     volumes:
-      - .:/home/package-bot/obs-package-status
+      - .:/home/frontend/obs-package-status
