@@ -18,3 +18,12 @@ services:
       - RUN_EVERY=600
     volumes:
       - .:/home/frontend/openqa-mail-notification
+  obs-package-status:
+    build:
+      dockerfile: Dockerfile
+      context: obs-package-status
+    restart: always
+    environment:
+      - RUN_EVERY=600
+    volumes:
+      - .:/home/frontend/obs-package-status
