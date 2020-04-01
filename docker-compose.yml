@@ -8,7 +8,7 @@ services:
     environment:
       - RUN_EVERY=600
     volumes:
-      - .:/home/frontend/openqa-trigger
+      - ./openqa-trigger:/home/frontend/openqa-trigger
   openqa-mail-notification:
     build:
       dockerfile: Dockerfile
@@ -17,7 +17,7 @@ services:
     environment:
       - RUN_EVERY=600
     volumes:
-      - .:/home/frontend/openqa-mail-notification
+      - ./openqa-mail-notification:/home/frontend/openqa-mail-notification
   obs-package-status:
     build:
       dockerfile: Dockerfile
@@ -26,7 +26,7 @@ services:
     environment:
       - RUN_EVERY=600
     volumes:
-      - .:/home/frontend/obs-package-status
+      - ./obs-package-status:/home/frontend/obs-package-status
   pull-request-package:
     build:
       dockerfile: Dockerfile
@@ -35,4 +35,4 @@ services:
     environment:
       - RUN_EVERY=600
     volumes:
-      - .:/home/frontend/pull_request_package
+      - ./pull_request_package:/home/frontend/pull_request_package
