@@ -1,6 +1,6 @@
 #!/bin/bash
 
 while true; do
-  exec "$@"
+  (exec $@)
   sleep $RUN_EVERY
 done
