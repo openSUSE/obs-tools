@@ -7,4 +7,3 @@ distribution: obs
 versions:
   Unstable: '62'
   '2.10': '63'
-  '2.9': '17'
