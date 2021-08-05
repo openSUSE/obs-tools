@@ -57,7 +57,7 @@ The architecture you want to check
 - `OBS_REPOSITORIES`
 A list of OBS Repositories you want to check the package for. Separated by blank.
 
-**Default**: `'SLE_12_SP4 openSUSE_42.3'`
+**Default**: `'SLE_15_SP3'`
 
 ## Usage
 1. Clone the repository
