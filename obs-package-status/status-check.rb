@@ -10,7 +10,7 @@ OBS_API_URL = ENV.fetch('OBS_API_URL', 'https://api.opensuse.org')
 OBS_PROJECT = ENV.fetch('OBS_PROJECT', 'OBS:Server:Unstable')
 OBS_PACKAGE = ENV.fetch('OBS_PACKAGE', 'obs-server')
 OBS_ARCHITECTURE = ENV.fetch('OBS_ARCHITECTURE', 'x86_64')
-obs_distributions = ENV.fetch('OBS_REPOSITORIES', 'SLE_12_SP4 openSUSE_42.3')
+obs_distributions = ENV.fetch('OBS_REPOSITORIES', 'SLE_15_SP3')
 OBS_REPOSITORIES = obs_distributions.split(' ')
 
 # Trello configuration
