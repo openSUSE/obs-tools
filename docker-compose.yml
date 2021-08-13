@@ -27,12 +27,3 @@ services:
       - RUN_EVERY=600
     volumes:
       - ./obs-package-status:/home/frontend/obs-package-status
-  pull-request-package:
-    build:
-      dockerfile: Dockerfile
-      context: pull_request_package
-    restart: always
-    environment:
-      - RUN_EVERY=600
-    volumes:
-      - ./pull_request_package:/home/frontend/pull_request_package
