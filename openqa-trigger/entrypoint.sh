@@ -2,5 +2,5 @@
 
 while true; do
   (exec $@)
-  sleep $RUN_EVERY
+  sleep $OBS_TOOLS_RUN_EVERY
 done

@@ -5,8 +5,8 @@ services:
       dockerfile: Dockerfile
       context: openqa-trigger
     restart: always
-    environment:
-      - RUN_EVERY=600
+    env_file:
+      - openqa-trigger/.env
     volumes:
       - ./openqa-trigger:/home/frontend/openqa-trigger
   openqa-mail-notification:

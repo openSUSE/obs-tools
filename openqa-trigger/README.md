@@ -3,11 +3,11 @@ This script triggers the openqa tests of OBS (Open Build Service). Currently,
 the tested Appliance versions are: **2.10** and **Unstable**.
 
 ## Requirements
-The machine needs to have installed previously `docker`, `docker-compose` and `git`.
+The machine needs to have `docker`, `docker-compose` and `git` installed.
 
 ## Configuration
-Before running the docker container, we need to copy `client.conf.example` file
-to `client.conf` and add the openqa **host**, API **key** and API **secret**.
+Before running the docker container, you need to copy `.env.example` file
+to `.env` and configure the variables. See the file for more information.
 
 ## Usage
 1. Clone the repository
