@@ -1,4 +1,3 @@
 ./Dockerfile
-./last_builds
 ./README.md
 ./docker-compose.yml
