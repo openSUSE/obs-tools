@@ -22,8 +22,8 @@ services:
     build:
       dockerfile: Dockerfile
       context: obs-package-status
+    env_file:
+      - obs-package-status/.env
     restart: always
-    environment:
-      - RUN_EVERY=600
     volumes:
       - ./obs-package-status:/home/frontend/obs-package-status
