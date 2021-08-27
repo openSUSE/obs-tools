@@ -5,7 +5,7 @@ require 'net/smtp'
 require 'uri'
 require 'json'
 require 'mail'
-require 'yaml/store'
+require 'yaml'
 
 def get_build_information(config, version, group)
   begin
@@ -62,11 +62,11 @@ config = YAML::load_file('config.yml')
 
 config['versions'].each_pair do |version, group|
   build = get_build_information(config, version, group)
-  store = YAML::Store.new("last_builds/build-#{version}.yml")
-  last_build = store.transaction { store[:name] }
-  result = last_build <=> build['name']
+  last_build = DateTime.parse(build['t_finished'])
+  ten_minutes_ago = DateTime.now - (10/1440.0)
+  result = last_build >= ten_minutes_ago
 
-  if result != 0 && build['state'] == 'done'
+  if result && build['state'] == 'done'
     modules = build['modules']
     successful_modules = modules.select { |m| m['result'] == 'passed' }
     failed_modules = modules.select { |m| m['result'] == 'failed' }
@@ -78,10 +78,5 @@ config['versions'].each_pair do |version, group|
     to = config['to_success']
     to = config['to_failed'] unless failed_modules.empty?
     send_notification(config['smtp_server'], config['from'], to, subject, message)
-
-    store.transaction do
-      store[:name] = build['name']
-      store[:last_run] = build['t_finished']
-    end
   end
 end
