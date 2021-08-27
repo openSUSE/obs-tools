@@ -30,6 +30,7 @@ TO_FAILED = ENV.fetch("OBS_TOOLS_TO_FAILED")
 SMTP_SERVER = ENV.fetch("OBS_TOOLS_SMTP_SERVER")
 
 def get_build_information(version, group)
+  @logger.info("Gathering information for #{version}")
   response = Faraday.get("#{OPENQA_URL}/api/v1/jobs?distri=#{DISTRIBUTION}&version=#{version}&groupid=#{group}")
   unless response.status == 200
     @logger.warn("Could not fetch openQA jobs: #{response.status}")
@@ -72,15 +73,19 @@ def send_notification(to, subject, message)
     @logger.warn("Could not send mail: #{e.inspect}")
     abort
   end
+  @logger.info("Sent notification #{subject} to #{to}")
 end
 
 Hash[VERSIONS.split.each_slice(2).to_a].each_pair do |version, group|
   build = get_build_information(version, group)
   last_build = DateTime.parse(build['t_finished'])
-  frequency_minutes_ago = DateTime.now - (FREQUENCY/1440.0)
+  frequency_minutes_ago = DateTime.now - (FREQUENCY / 1440.0)
   result = last_build >= frequency_minutes_ago
 
-  next unless result && build['state'] == 'done'
+  unless result && build['state'] == 'done'
+    @logger.info("No builds done for #{version}...")
+    next
+  end
 
   modules = build['modules']
   successful_modules = modules.select { |m| m['result'] == 'passed' }

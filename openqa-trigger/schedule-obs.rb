@@ -20,8 +20,8 @@ FREQUENCY = ENV.fetch('OBS_TOOLS_RUN_EVERY', 10).to_i
 def fetch_binaries(version)
   response = Faraday.get("https://api.opensuse.org/public/build/OBS:Server:#{version}/images/x86_64/OBS-Appliance:qcow2")
   unless response.status == 200
-    @logger.warn("Could not fetch binaries: #{response.status}")
-    return
+    @logger.fatal("Could not fetch binaries: #{response.status}")
+    abort
   end
 
   Xmlhash.parse(response.body)
@@ -31,8 +31,8 @@ def fetch_image(version)
   binaries = fetch_binaries(version)
   image = binaries['binary'].select { |binary| binary['filename'].end_with?('.qcow2') }.last
   unless image
-    @logger.warn('No qcow2 image found')
-    return
+    @logger.fatal('No qcow2 image found')
+    abort
   end
 
   image['mtime'] = DateTime.strptime(image['mtime'], '%s')
@@ -45,7 +45,7 @@ def trigger_run(version:)
 
   frequency_minutes_ago = DateTime.now - (FREQUENCY/1440.0)
   unless qcow2_image['mtime'] >= frequency_minutes_ago
-    @logger.info('No new build found...')
+    @logger.info("No new build found for #{version}...")
     return
   end
 
