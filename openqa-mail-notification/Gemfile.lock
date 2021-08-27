@@ -21,6 +21,9 @@ GEM
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
+    mail (2.7.1)
+      mini_mime (>= 0.1.1)
+    mini_mime (1.1.1)
     multipart-post (2.1.1)
     ruby2_keywords (0.0.5)
 
@@ -30,4 +33,5 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   faraday
+  mail
 
