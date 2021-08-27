@@ -2,8 +2,15 @@
 require 'net/http'
 require 'nokogiri'
 require 'json'
-# require 'pry'
+require 'pry'
 require 'dotenv/load'
+require 'logger'
+
+@logger = Logger.new(STDOUT)
+original_formatter = Logger::Formatter.new
+@logger.formatter = proc { |severity, datetime, progname, msg|
+  original_formatter.call(severity, datetime, progname, msg.dump)
+}
 
 # OBS Configuration
 OBS_API_URL = ENV.fetch('OBS_API_URL', 'https://api.opensuse.org')
@@ -26,12 +33,18 @@ def get_package_status
     uri = URI("#{OBS_API_URL}/public/build/#{OBS_PROJECT}/_result?package=#{OBS_PACKAGE}&arch=#{OBS_ARCHITECTURE}&repository=#{distro}")
     response = Net::HTTP.get_response(uri)
 
-    abort(response.message) unless response.is_a?(Net::HTTPOK)
+    unless response.is_a?(Net::HTTPOK)
+      @logger.fatal("Unable to get package status: #{response.message}")
+      abort
+    end
 
     status = Nokogiri::XML(response.body).css('status')
 
     # Bug: openSUSE/open-build-service#6924
-    abort("Can't find architecture #{OBS_ARCHITECTURE}") if status.empty?
+    if status.empty?
+      @logger.fatal("Can't find architecture #{OBS_ARCHITECTURE}")
+      abort
+    end
 
     package_status["#{distro}"] = status.first.attr('code')
   end
@@ -57,15 +70,20 @@ def change_card_content(package_status = {})
   request.set_form_data({
     "value" => trello_card_content
   })
-  Net::HTTP.start(card_desc_uri.hostname, card_desc_uri.port, use_ssl: true) { |http| http.request(request) }
-end
+  response = Net::HTTP.start(card_desc_uri.hostname, card_desc_uri.port, use_ssl: true) { |http| http.request(request) }
 
+  unless response.is_a?(Net::HTTPOK)
+    @logger.fatal("Unable to change card content: #{response.message}")
+    abort
+  end
+  @logger.info('Successfully set card content')
+end
 
 def change_trello_cover(status:)
   image_name = status ? TRELLO_PASSED_IMAGE : TRELLO_FAILED_IMAGE
   cover_id = get_trello_image_id(image_name: image_name)
   unless cover_id
-    puts "Warning: can't find image with name #{image_name}, not changing card cover"
+    @logger.warn("Warning: can't find image with name #{image_name}, not changing card cover")
     return
   end
 
@@ -73,19 +91,28 @@ def change_trello_cover(status:)
   request = Net::HTTP::Put.new(cover_uri)
   response = Net::HTTP.start(cover_uri.hostname, cover_uri.port, use_ssl: true) { |http| http.request(request) }
 
-  abort(response.message) unless response.is_a?(Net::HTTPOK)
+  unless response.is_a?(Net::HTTPOK)
+    @logger.fatal("Unable to change card cover: #{response.message}")
+    abort
+  end
+
+  @logger.info("Successfully set #{status} cover")
 end
 
 def get_trello_image_id(image_name:)
   uri = URI("https://api.trello.com/1/cards/#{TRELLO_CARD_ID}/attachments?key=#{TRELLO_KEY}&token=#{TRELLO_TOKEN}")
   response = Net::HTTP.get_response(uri)
 
-  abort(response.message) unless response.is_a?(Net::HTTPOK)
+  unless response.is_a?(Net::HTTPOK)
+    @logger.fatal("Unable to get card: #{response.message}")
+    abort
+  end
 
   attachments = JSON.parse(response.body)
-  attachments.select!{ |image| image['name'] == image_name }
+  attachments.select! { |image| image['name'] == image_name }
 
   return if attachments.empty?
+
   attachments.first['id']
 end
 
