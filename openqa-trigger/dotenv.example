@@ -1,0 +1,13 @@
+### openQA
+# Your openQA API key
+# Default: none (you need to set this)
+OBS_TOOLS_OPENQA_KEY=12345
+
+# Your openQA API secret
+# Default: none (you need to set this)
+OBS_TOOLS_OPENQA_SECRET=password
+
+# The frequency to run the services in minutes.
+# Like 60 means run every hour.
+# Default: 10 minutes
+# OBS_TOOLS_RUN_EVERY=10
