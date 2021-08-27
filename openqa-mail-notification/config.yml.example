@@ -1,9 +1,0 @@
-from: from@my.domain
-to_success: to.success@my.domain
-to_failed: to.failed@my.domain
-smtp_server: relay.my.domain
-open_qa: https://openqa.my.domain/
-distribution: obs
-versions:
-  Unstable: '62'
-  '2.10': '63'

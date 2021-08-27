@@ -1,0 +1,37 @@
+# The frequency to run the service in minutes.
+# Like 10 means run every 10 minutes.
+# Default: 10
+# OBS_TOOLS_RUN_EVERY=10
+
+### openQA Settings
+# The URL of your openQA installation
+# Default: https://openqa.opensuse.org
+# OBS_TOOLS_OPENQA_URL=https://openqa.opensuse.org
+
+# Your openQA distribution
+# The distribution on openQA
+# Default: obs
+# OBS_TOOLS_OPENQA_DISTRIBUTION=obs
+
+# The versions of your distributions to notify you about in tuples
+# First string is your version, second string the openQA group ID.
+# Default: Unstable 62 2.10 63
+# OBS_TOOLS_OPENQA_VERSIONS="Unstable 62 2.10 63"
+
+### SMTP Settings
+# The From: address your mail should come from
+# Default: none (you have to set this)
+# OBS_TOOLS_FROM="no-reply@example.com"
+
+# The To: address that successful test runs should be sent to
+# Default: none (you have to set this)
+# OBS_TOOLS_TO_SUCCESS="success@example.com"
+
+# The To: address that failed test runs should be sent to
+# Default: none (you have to set this)
+# OBS_TOOLS_TO_FAILED="errors@example.com"
+
+# Your mail relay host
+# Default: none (you have to set this)
+# OBS_TOOLS_SMTP_SERVER="relay.example.com"
+

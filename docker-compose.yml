@@ -13,9 +13,9 @@ services:
     build:
       dockerfile: Dockerfile
       context: openqa-mail-notification
+    env_file:
+      - openqa-mail-notification/.env
     restart: always
-    environment:
-      - RUN_EVERY=600
     volumes:
       - ./openqa-mail-notification:/home/frontend/openqa-mail-notification
   obs-package-status:
