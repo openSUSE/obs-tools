@@ -49,13 +49,17 @@ def trigger_run(version:)
     return
   end
 
+  @logger.info("Found new build for #{version} (#{qcow2_image['filename']}), triggering openQA")
+
   options = "isos post --host #{OPENQA_URL}"
   options << " --apikey #{OPENQA_API_KEY}"
   options << " --apisecret #{OPENQA_API_SECRET}"
   options << " HDD_1_URL=https://download.opensuse.org/repositories/OBS:/Server:/#{version}/images/#{qcow2_image['filename']}"
   options << " DISTRI=obs ARCH=x86_64 VERSION=#{version}"
   options << " BUILD=#{qcow2_image['build_id']} FLAVOR=Appliance"
-  system('/usr/share/openqa/script/client', options)
+  result = %x( /usr/share/openqa/script/client #{options})
+  @logger.info("openqa-client: #{result.chomp}")
+  $?.exitstatus != 0 ? abort(result) : true
 end
 
 trigger_run(version: 'Unstable')
