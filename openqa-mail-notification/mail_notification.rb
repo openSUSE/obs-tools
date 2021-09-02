@@ -78,12 +78,18 @@ end
 
 Hash[VERSIONS.split.each_slice(2).to_a].each_pair do |version, group|
   build = get_build_information(version, group)
+
+  unless build['state'] == 'done'
+    @logger.info("Build not done yet for #{version}...")
+    next
+  end
+
   last_build = DateTime.parse(build['t_finished'])
   frequency_minutes_ago = DateTime.now - (FREQUENCY / 1440.0)
-  result = last_build >= frequency_minutes_ago
+  new_result = last_build >= frequency_minutes_ago
 
-  unless result && build['state'] == 'done'
-    @logger.info("No builds done for #{version}...")
+  unless new_result
+    @logger.info("No new builds for #{version}...")
     next
   end
 
