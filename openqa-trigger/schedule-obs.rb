@@ -36,7 +36,7 @@ def fetch_image(version)
   end
 
   image['mtime'] = DateTime.strptime(image['mtime'], '%s')
-  image['build_id'] = "#{image['filename'].split('-')[2]}-#{image['filename'].split('-')[4].gsub('Build', '')}"
+  image['build_id'] = "#{image['filename'].gsub('obs-server.x86_64-', '').gsub('Build', '').gsub('.qcow2', '')}"
   image
 end
 
