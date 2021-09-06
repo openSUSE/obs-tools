@@ -43,7 +43,7 @@ end
 def trigger_run(version:)
   qcow2_image = fetch_image(version)
 
-  frequency_minutes_ago = DateTime.now - (FREQUENCY/1440.0)
+  frequency_minutes_ago = DateTime.now.new_offset(0) - (FREQUENCY/1440.0)
   unless qcow2_image['mtime'] >= frequency_minutes_ago
     @logger.info("No new build found for #{version}...")
     return
