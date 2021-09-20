@@ -85,7 +85,7 @@ Hash[VERSIONS.split.each_slice(2).to_a].each_pair do |version, group|
   end
 
   last_build = DateTime.parse(build['t_finished'])
-  frequency_minutes_ago = DateTime.now - (FREQUENCY / 1440.0)
+  frequency_minutes_ago = DateTime.now.new_offset(0) - (FREQUENCY / 1440.0)
   new_result = last_build >= frequency_minutes_ago
 
   unless new_result
