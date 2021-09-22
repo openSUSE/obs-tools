@@ -89,7 +89,7 @@ Hash[VERSIONS.split.each_slice(2).to_a].each_pair do |version, group|
   new_result = last_build >= frequency_minutes_ago
 
   unless new_result
-    @logger.info("No new builds for #{version}...")
+    @logger.info("No new builds for #{version} right now (#{DateTime.now.new_offset(0)}). Last build: #{last_build}")
     next
   end
 
