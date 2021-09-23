@@ -9,6 +9,7 @@ require 'mail'
 require 'yaml'
 require 'faraday'
 require 'logger'
+require 'pry'
 
 @logger = Logger.new(STDOUT)
 original_formatter = Logger::Formatter.new
@@ -79,6 +80,10 @@ end
 Hash[VERSIONS.split.each_slice(2).to_a].each_pair do |version, group|
   build = get_build_information(version, group)
 
+  unless build
+    @logger.info("No builds at all for #{version}...")
+    next
+  end
   unless build['state'] == 'done'
     @logger.info("Build not done yet for #{version}...")
     next
